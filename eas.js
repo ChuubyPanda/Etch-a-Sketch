@@ -7,6 +7,7 @@ const blue = document.createElement('button');
 const black = document.createElement('button');
 const green = document.createElement('button');
 const eraser = document.createElement('button');
+const newGrid = document.createElement('button');
 red.style.backgroundColor = 'red';
 blue.style.backgroundColor = 'blue';
 black.style.backgroundColor = 'black';
@@ -17,6 +18,7 @@ green.textContent = 'green';
 black.textContent = 'black';
 red.textContent = 'red';
 blue.textContent = 'blue';
+newGrid.textContent = 'clear';
 start.style.textAlign = 'center';
 start.textContent = 'START THE DRAWINGGGGGGGGGG!!!!';
 container.appendChild(start);
@@ -25,6 +27,7 @@ container.appendChild(blue);
 container.appendChild(black);
 container.appendChild(green);
 container.appendChild(eraser);
+container.appendChild(newGrid);
 red.style.margin = '20px';
 blue.style.margin = '20px';
 green.style.margin = '20px';
@@ -47,7 +50,7 @@ black.addEventListener('click', ()=> {
 eraser.addEventListener('click', ()=> {
     color = 'white';
 })
-start.addEventListener('click', ()=> {
+start.addEventListener('click', () => {
     size = prompt("How many squares do you want: ");
     createGrid(size);
     const grids = document.querySelectorAll('.grid');
@@ -56,16 +59,37 @@ start.addEventListener('click', ()=> {
         console.log('hello');
         grid.style.backgroundColor = color;
     })
+    }
+)
+container.removeChild(start);
 });
+newGrid.addEventListener('click', () => {
+    for(i = 0;i < size;i++){
+        const remove = document.querySelector(`.row`);
+        remove.classList.remove('row');
+        container.removeChild(remove);
+    }
+    size = prompt("How many squares do you want: ");
+    createGrid(size);
+    const grids = document.querySelectorAll('.grid');
+    grids.forEach(grid => {
+    grid.addEventListener('mouseover' ,() => {
+        console.log('hello');
+        grid.style.backgroundColor = color;
+    })
 })
+});
 function createGrid(size){
     for(i = 0;i < size;i++){
         const row = document.createElement('div');
+        row.classList.add('row');
         row.style.margin = '-10px';
         container.appendChild(row);
        for(j = 0;j < size;j++){
             const grid = document.createElement('div');
-            grid.className = 'grid'
+            grid.classList.add(`grid${i}-${j}`);
+            grid.classList.add('grid');
+            console.log(grid.className);
             let x = 960/size
             grid.style.width = `${x}px`;
             grid.style.display = 'inline';
@@ -78,4 +102,3 @@ function createGrid(size){
        }
     }
 }
-
